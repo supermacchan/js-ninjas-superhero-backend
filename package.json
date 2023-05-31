@@ -6,6 +6,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",
     "start:dev": "cross-env NODE_ENV=development nodemon ./server.js",
+    "lint": "eslint **/*.js",
+    "lint:fix": "eslint --fix **/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,5 +22,8 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "npm": "^9.6.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.41.0"
   }
 }

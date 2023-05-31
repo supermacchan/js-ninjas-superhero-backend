@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3001;
 const uriDb = process.env.DB_HOST;
-console.log(uriDb);
 
 mongoose.set("strictQuery", true);
 
