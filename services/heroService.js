@@ -1,7 +1,8 @@
 const { Hero } = require('../db/heroSchema');
 const { 
     ServerError,
-    ValidationError
+    ValidationError,
+    NotFoundError
 } = require('../helpers/errors');
 
 const getHeroes = async (skip, limit) => {
@@ -27,7 +28,29 @@ const addHero = async (data) => {
     }
 }
 
+const updateHero = async (heroId, data) => {
+    try {
+        const hero = await Hero.findOneAndUpdate(
+            {_id: heroId},
+            {$set: data},
+            {
+                returnDocument: 'after',
+                returnNewDocument: true
+            })
+            .select({__v: 0});
+    
+        if (!hero) {
+            throw new NotFoundError('Not found');
+        }
+    
+        return hero;
+    } catch (err) {
+        throw new NotFoundError('Not found');
+    }
+}
+
 module.exports = {
     getHeroes,
-    addHero
+    addHero,
+    updateHero
 }

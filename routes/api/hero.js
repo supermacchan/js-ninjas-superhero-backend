@@ -3,15 +3,13 @@ const router = express.Router()
 
 const { 
     getHeroesController,
-    addHeroController
+    addHeroController,
+    updateHeroController
 } = require('../../controllers/heroController');
 
 router.get('/', getHeroesController);
 router.post('/', addHeroController);
-router.put('/:id');
+router.put('/:id', updateHeroController);
 router.delete('/:id');
-
-// router.post('/signup', validateBody(registerSchema), registrationController);
-// router.post('/login', validateBody(loginSchema), loginController);
 
 module.exports = { heroRouter: router };
