@@ -5,6 +5,7 @@ const {
     deleteHero
 } = require('../services/heroService');
 const { ValidationError } = require('../helpers/errors');
+const { imageResizingMiddleware } = require('../middleware/imageResizingMiddleware');
 
 const getHeroesController = async (req, res) => {
     try {
@@ -27,8 +28,31 @@ const getHeroesController = async (req, res) => {
 }
 
 const addHeroController = async (req, res) => {
-    const data = req.body;
+    console.log(req);
+    const data = req.body; 
+    console.log(req.files);
+
+    if (req.files) {
+        data.images = [];
+            
+        await req.files.forEach(async img => {
+            const [fileName, extension] =  img.filename.split('.');
+            const filePath = `./tmp/${fileName}.${extension}`;
+
+            const newFileLocation = await imageResizingMiddleware(filePath, extension);
+            data.images.push(newFileLocation);
+            console.log(data.images);
+            console.log(newFileLocation);
+        });
+    }
+
+    // if (req.file) {
+    //     const filePath = req.file.path;
+    //     data.images.push(filePath);
+    // }
+
     try {
+        console.log(data);
         const hero = await addHero(data);
         res.status(201).json({
             status: 'created',
@@ -56,6 +80,7 @@ const updateHeroController = async (req, res) => {
             data: hero
         });
     } catch (err) {
+        console.log(err);
         res.status(err.status).json(err.message);
     }
 }

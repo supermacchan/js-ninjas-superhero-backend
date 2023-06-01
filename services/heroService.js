@@ -24,6 +24,7 @@ const addHero = async (data) => {
         await Hero.create(hero);
         return hero;
     } catch (err) {
+        console.log(err);
         throw new ValidationError('Bad request: some required fields are not filled out.');
     }
 }
@@ -52,7 +53,7 @@ const updateHero = async (heroId, data) => {
 const deleteHero = async (heroId) => {
     try {
         const hero = await Hero.findOneAndRemove({_id: heroId});
-        
+
         if (!hero) {
             throw new NotFoundError('Not found');
         }
