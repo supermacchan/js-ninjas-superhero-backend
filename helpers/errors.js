@@ -5,14 +5,14 @@ class ServerError extends Error {
     }
 }
 
-class ValidationError extends ContactListAppError {
+class ValidationError extends ServerError {
     constructor(message) {
         super(message);
         this.status = 400;
     }
 }
 
-class NotFoundError extends ContactListAppError {
+class NotFoundError extends ServerError {
     constructor(message) {
         super(message);
         this.status = 404;
