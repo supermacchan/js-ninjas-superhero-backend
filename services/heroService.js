@@ -1,5 +1,8 @@
 const { Hero } = require('../db/heroSchema');
-const { ServerError } = require('../helpers/errors');
+const { 
+    ServerError,
+    ValidationError
+} = require('../helpers/errors');
 
 const getHeroes = async (skip, limit) => {
     try {
@@ -14,6 +17,17 @@ const getHeroes = async (skip, limit) => {
     }
 };
 
+const addHero = async (data) => {
+    try {
+        const hero = new Hero(data);
+        await Hero.create(hero);
+        return hero;
+    } catch (err) {
+        throw new ValidationError('Bad request: some required fields are not filled out.');
+    }
+}
+
 module.exports = {
-    getHeroes
+    getHeroes,
+    addHero
 }

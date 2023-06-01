@@ -7,23 +7,26 @@ const heroSchema = new mongoose.Schema({
     },
     real_name: {
         type: String,
-        default: 'Unknown'
+        default: 'Unknown',
     },
     origin_description: {
         type: String,
-        default: 'Unknown'
+        default: 'Unknown',
     },
     superpowers: {
         type: String,
-        default: 'Unknown'
+        default: 'Unknown',
     },
     catch_phrase: {
         type: String,
-        default: 'Unknown'
+        default: 'Unknown',
     },
-    images: [{
-        type: String
-    }]
+    images: {
+        type: [{
+            type: String
+        }],
+        default: []
+    }
 })
 
 const Hero = mongoose.model('Hero', heroSchema, 'heroes');

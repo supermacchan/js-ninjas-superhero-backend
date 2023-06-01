@@ -1,10 +1,13 @@
 const express = require('express')
 const router = express.Router()
 
-const { getHeroesController } = require('../../controllers/heroController');
+const { 
+    getHeroesController,
+    addHeroController
+} = require('../../controllers/heroController');
 
 router.get('/', getHeroesController);
-router.post('/');
+router.post('/', addHeroController);
 router.put('/:id');
 router.delete('/:id');
 
