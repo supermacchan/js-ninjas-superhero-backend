@@ -4,12 +4,13 @@ const router = express.Router()
 const { 
     getHeroesController,
     addHeroController,
-    updateHeroController
+    updateHeroController,
+    deleteHeroController
 } = require('../../controllers/heroController');
 
 router.get('/', getHeroesController);
 router.post('/', addHeroController);
 router.put('/:id', updateHeroController);
-router.delete('/:id');
+router.delete('/:id', deleteHeroController);
 
 module.exports = { heroRouter: router };

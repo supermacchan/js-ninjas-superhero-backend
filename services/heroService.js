@@ -49,8 +49,21 @@ const updateHero = async (heroId, data) => {
     }
 }
 
+const deleteHero = async (heroId) => {
+    try {
+        const hero = await Hero.findOneAndRemove({_id: heroId});
+        
+        if (!hero) {
+            throw new NotFoundError('Not found');
+        }
+    } catch (err) {
+        throw new NotFoundError('Not found');
+    }
+}
+
 module.exports = {
     getHeroes,
     addHero,
-    updateHero
+    updateHero,
+    deleteHero
 }

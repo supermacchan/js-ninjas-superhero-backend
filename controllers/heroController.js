@@ -1,7 +1,8 @@
 const { 
     getHeroes,
     addHero,
-    updateHero
+    updateHero,
+    deleteHero
 } = require('../services/heroService');
 const { ValidationError } = require('../helpers/errors');
 
@@ -58,8 +59,23 @@ const updateHeroController = async (req, res) => {
     }
 }
 
+const deleteHeroController = async (req, res) => {
+    const { id: heroId } = req.params;
+
+    try {
+        await deleteHero(heroId);
+        res.status(200).json({
+            status: 'success: item deleted',
+            code: 200,
+        });
+    } catch (err) {
+        res.status(err.status).json(err.message);
+    }
+}
+
 module.exports = {
     getHeroesController,
     addHeroController,
-    updateHeroController
+    updateHeroController,
+    deleteHeroController
 }
