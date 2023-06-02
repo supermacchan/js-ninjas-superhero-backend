@@ -6,13 +6,9 @@ const fileProcessingMiddleware = async (req, res, next) => {
         if (req.files) {
             const images = [];  
             const files = req.files;
-    
+
             for (let file of files) {
-                const [fileName, extension] =  file.filename.split('.');
-                const filePath = `./tmp/${fileName}.${extension}`;
-    
-                const newFileLocation = await imageResizingMiddleware(filePath, extension);
-                images.push(newFileLocation);
+                images.push(file.path);
             }
 
             req.body.images = images;
