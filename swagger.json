@@ -296,6 +296,76 @@
             "example": "The server could not complete your query."
           }
         }
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64",
+            "example": 2
+          },
+          "data": {
+            "$ref": "#/components/schemas/Heroes"
+          }
+        }
+      },
+      "inline_response_201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 201
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Hero"
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Hero"
+          }
+        }
+      },
+      "inline_response_200_2": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success - item deleted"
+          }
+        }
       }
     }
   }
