@@ -2,11 +2,12 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const { v4: uuid } = require('uuid');
+require('dotenv').config();
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME || 'dyd5p6vjc',
-  api_key: process.env.CLOUD_API_KEY || '647916481295498',
-  api_secret: process.env.CLOUD_API_SECRET || '3foXij-wOqHarcBd71_MBMvXVCM',
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
 });
 
 const imgParams = {

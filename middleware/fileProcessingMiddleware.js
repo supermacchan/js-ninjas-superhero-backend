@@ -1,4 +1,3 @@
-const { imageResizingMiddleware } = require('./imageResizingMiddleware');
 const { ValidationError } = require('../helpers/errors');
 
 const fileProcessingMiddleware = async (req, res, next) => {
