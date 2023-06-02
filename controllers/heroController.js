@@ -6,6 +6,7 @@ const {
 } = require('../services/heroService');
 const { ValidationError } = require('../helpers/errors');
 
+// =========== fetch all heroes (with pagination) ===============
 const getHeroesController = async (req, res) => {
     try {
         let {
@@ -26,6 +27,7 @@ const getHeroesController = async (req, res) => {
     }
 }
 
+// =========== add new hero ===============
 const addHeroController = async (req, res) => {
     const data = req.body; 
 
@@ -41,6 +43,7 @@ const addHeroController = async (req, res) => {
     }
 }
 
+// =========== update existing hero info ===============
 const updateHeroController = async (req, res) => {
     if (Object.keys(req.body).length === 0) {
         throw new ValidationError('Bad request: some required fields are not filled out.')
@@ -57,11 +60,11 @@ const updateHeroController = async (req, res) => {
             data: hero
         });
     } catch (err) {
-        console.log(err);
         res.status(err.status).json(err.message);
     }
 }
 
+// =========== delete hero by id ===============
 const deleteHeroController = async (req, res) => {
     const { id: heroId } = req.params;
 

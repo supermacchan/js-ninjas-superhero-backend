@@ -5,6 +5,7 @@ const {
     NotFoundError
 } = require('../helpers/errors');
 
+// =========== fetch all heroes (with pagination) ===============
 const getHeroes = async (skip, limit) => {
     try {
         const heroes = await 
@@ -18,17 +19,18 @@ const getHeroes = async (skip, limit) => {
     }
 };
 
+// =========== add new hero ===============
 const addHero = async (data) => {
     try {
         const hero = new Hero(data);
         await Hero.create(hero);
         return hero;
     } catch (err) {
-        console.log(err);
         throw new ValidationError('Bad request: some required fields are not filled out.');
     }
 }
 
+// =========== update existing hero info ===============
 const updateHero = async (heroId, data) => {
     try {
         const hero = await Hero.findOneAndUpdate(
@@ -50,6 +52,7 @@ const updateHero = async (heroId, data) => {
     }
 }
 
+// =========== delete hero by id ===============
 const deleteHero = async (heroId) => {
     try {
         const hero = await Hero.findOneAndRemove({_id: heroId});
