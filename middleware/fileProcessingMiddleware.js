@@ -2,7 +2,7 @@ const { ValidationError } = require('../helpers/errors');
 
 const fileProcessingMiddleware = async (req, res, next) => {
     try {
-        if (req.files) {
+        if (req.files.length > 0) {
             const images = [];  
             const files = req.files;
 
