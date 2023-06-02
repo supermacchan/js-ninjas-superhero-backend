@@ -1,30 +1,29 @@
-// const { imageResizingMiddleware } = require('./imageResizingMiddleware');
+const { imageResizingMiddleware } = require('./imageResizingMiddleware');
+const { ValidationError } = require('../helpers/errors');
 
-// const fileProcessingMiddleware = async (req, res, next) => {
-//     try {
-//         const data = req.body; 
-//         console.log(req.files);
+const fileProcessingMiddleware = async (req, res, next) => {
+    try {
+        if (req.files) {
+            const images = [];  
+            const files = req.files;
+    
+            for (let file of files) {
+                const [fileName, extension] =  file.filename.split('.');
+                const filePath = `./tmp/${fileName}.${extension}`;
+    
+                const newFileLocation = await imageResizingMiddleware(filePath, extension);
+                images.push(newFileLocation);
+            }
 
-//         if (req.files) {
-//             data.images = [];
-                
-//             req.files.forEach(async img => {
-//                 const [fileName, extension] =  img.filename.split('.');
-//                 const filePath = `./tmp/${fileName}.${extension}`;
+            req.body.images = images;
+        }
 
-//                 const newFileLocation = await imageResizingMiddleware(filePath, extension);
-//                 data.images.push(newFileLocation);
-//                 console.log(data.images);
-//                 console.log(newFileLocation);
-//             });
-//         }
+        next();
+    } catch (err) {
+        throw new ValidationError('Bad request.')
+    }
+}
 
-//         next();
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
-
-// module.exports = {
-//     fileProcessingMiddleware
-// }
+module.exports = {
+    fileProcessingMiddleware
+}
