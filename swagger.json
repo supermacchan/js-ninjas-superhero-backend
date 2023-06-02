@@ -1,0 +1,372 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "superhero-api",
+    "description": "The API for the Superhero Catalog",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Superhero Catalog",
+    "url": "https://supermacchan.github.io/js-ninjas-superhero/"
+  },
+  "servers": [
+    {
+      "url": "https://superhero-backend.onrender.com/api",
+      "description": "Superhero Catalog - Backend"
+    }
+  ],
+  "paths": {
+    "/heroes": {
+      "get": {
+        "tags": [
+          "heroes"
+        ],
+        "summary": "Fetch heroes",
+        "description": "Fetch all heroes for the requested page.",
+        "operationId": "hero/fetchAll",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page must be a number. The default value is 1.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "heroes"
+        ],
+        "summary": "Add new hero",
+        "description": "Create a new hero.",
+        "operationId": "hero/createNew",
+        "requestBody": {
+          "description": "Information about the hero.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Info"
+              },
+              "encoding": {
+                "img": {
+                  "contentType": "image/png, image/jpeg",
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_201"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - some required fields are not filled out.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heroes/{id}": {
+      "put": {
+        "tags": [
+          "heroes"
+        ],
+        "summary": "Update hero info by Id",
+        "description": "Update hero info by Id",
+        "operationId": "hero/update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Hero Id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "/api/heroes/640cd5ac2d9fecf12e8897fc"
+          }
+        ],
+        "requestBody": {
+          "description": "Information about the hero.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Info"
+              },
+              "encoding": {
+                "img": {
+                  "contentType": "image/png, image/jpeg",
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hero with provided id was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "heroes"
+        ],
+        "summary": "Delete hero by Id",
+        "description": "Delete hero by Id",
+        "operationId": "hero/delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Hero Id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "/api/heroes/640cd5ac2d9fecf12e8897fc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hero with provided id was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Heroes": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Hero"
+        }
+      },
+      "Hero": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889807"
+          },
+          "nickname": {
+            "type": "string",
+            "example": "Batman"
+          },
+          "real_name": {
+            "type": "string",
+            "example": "Bruce Wayne"
+          },
+          "origin_description": {
+            "type": "string",
+            "example": "A young Bruce Wayne witnessed his parents' murder at the hands of a mugger. Days later, the child vows that by the spirits of his parents he will avenge their deaths by spending the rest of my life warring on all criminals."
+          },
+          "superpowers": {
+            "type": "string",
+            "example": "Genius-level intellect, expert detective, master martial artist and hand-to-hand combatant, master tactician, strategist, and field commander, utilizes high-tech equipment and weapons"
+          },
+          "catch_phrase": {
+            "type": "string",
+            "example": "The night is darkest just before the dawn."
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://i.ibb.co/cv69kf6/batman-1.jpg"
+            }
+          }
+        }
+      },
+      "Info": {
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "example": "Batman"
+          },
+          "real_name": {
+            "type": "string",
+            "example": "Bruce Wayne"
+          },
+          "origin_description": {
+            "type": "string",
+            "example": "A young Bruce Wayne witnessed his parents' murder at the hands of a mugger. Days later, the child vows that by the spirits of his parents he will avenge their deaths by spending the rest of my life warring on all criminals."
+          },
+          "superpowers": {
+            "type": "string",
+            "example": "Genius-level intellect, expert detective, master martial artist and hand-to-hand combatant, master tactician, strategist, and field commander, utilizes high-tech equipment and weapons"
+          },
+          "catch_phrase": {
+            "type": "string",
+            "example": "The night is darkest just before the dawn."
+          },
+          "img": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "The server could not complete your query."
+          }
+        }
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int64",
+            "example": 2
+          },
+          "data": {
+            "$ref": "#/components/schemas/Heroes"
+          }
+        }
+      },
+      "inline_response_201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 201
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Hero"
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Hero"
+          }
+        }
+      },
+      "inline_response_200_2": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success - item deleted"
+          }
+        }
+      }
+    }
+  }
+}
