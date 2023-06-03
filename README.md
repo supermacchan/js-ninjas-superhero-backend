@@ -13,3 +13,5 @@ https://superhero-backend.onrender.com/api-docs/
 - ``npm install`` — installing necessary packages and dependencies
 - ``npm start`` — start the server in production mode
 - ``npm run start:dev`` — start the server in development mode
+
+Locally the server will be available at http://localhost:3001/.
